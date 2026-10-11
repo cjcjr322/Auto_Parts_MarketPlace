@@ -4,6 +4,7 @@
 <header th:fragment="header(email)">
     <a class="logo" th:href="@{/}">Автозапчасти</a>
     <nav>
+        <a th:href="@{/catalog}">Каталог</a>
         <a th:href="@{/listings}">Объявления</a>
         <span th:if="${email == null}">
             <a th:href="@{/login}">Войти</a>

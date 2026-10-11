@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Раздел каталога</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<header th:replace="~{fragments :: header(${email})}"></header>
+<main>
+    <p><a th:href="@{/catalog/car(make=${carMake},model=${carModel},year=${carYear})}">← К схеме автомобиля</a></p>
+    <h1 th:text="${section.title()}"></h1>
+    <p th:text="${carTitle}"></p>
+
+    <div class="card" th:each="n : ${section.nodes()}">
+        <h3 th:text="${n.title()}"></h3>
+        <a class="button" th:href="@{/listings(type='SELL',q=${n.keyword()})}">Продаются</a>
+        <a class="button" th:href="@{/listings(type='WANT',q=${n.keyword()})}">Ищут</a>
+    </div>
+</main>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Выбор узла</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<header th:replace="~{fragments :: header(${email})}"></header>
+<main>
+    <p><a th:href="@{/catalog}">← Выбрать другой автомобиль</a></p>
+    <h1 th:text="${carTitle}"></h1>
+    <p th:if="${carVin != ''}">VIN: <span th:text="${carVin}"></span></p>
+    <p>Нажмите на часть автомобиля, чтобы выбрать узел.</p>
+
+    <svg class="car" viewBox="0 0 320 580" xmlns="http://www.w3.org/2000/svg">
+        <rect class="body" x="80" y="10" width="160" height="560" rx="60"/>
+
+        <a th:href="@{/catalog/section/{c}(c='cooling',make=${carMake},model=${carModel},year=${carYear})}">
+            <rect class="zone" x="92" y="30" width="136" height="50" rx="10"/>
+            <text class="lbl" x="160" y="60">Охлаждение</text>
+        </a>
+        <a th:href="@{/catalog/section/{c}(c='engine',make=${carMake},model=${carModel},year=${carYear})}">
+            <rect class="zone" x="92" y="85" width="136" height="100" rx="10"/>
+            <text class="lbl" x="160" y="140">Двигатель</text>
+        </a>
+        <a th:href="@{/catalog/section/{c}(c='electrics',make=${carMake},model=${carModel},year=${carYear})}">
+            <rect class="zone" x="92" y="190" width="136" height="40" rx="10"/>
+            <text class="lbl" x="160" y="216">Электрика</text>
+        </a>
+        <a th:href="@{/catalog/section/{c}(c='interior',make=${carMake},model=${carModel},year=${carYear})}">
+            <rect class="zone" x="92" y="235" width="136" height="130" rx="10"/>
+            <text class="lbl" x="160" y="305">Салон</text>
+        </a>
+        <a th:href="@{/catalog/section/{c}(c='transmission',make=${carMake},model=${carModel},year=${carYear})}">
+            <rect class="zone" x="92" y="370" width="136" height="60" rx="10"/>
+            <text class="lbl" x="160" y="405">Трансмиссия</text>
+        </a>
+        <a th:href="@{/catalog/section/{c}(c='exhaust',make=${carMake},model=${carModel},year=${carYear})}">
+            <rect class="zone" x="92" y="435" width="136" height="60" rx="10"/>
+            <text class="lbl" x="160" y="470">Выхлоп</text>
+        </a>
+        <a th:href="@{/catalog/section/{c}(c='body',make=${carMake},model=${carModel},year=${carYear})}">
+            <rect class="zone" x="92" y="500" width="136" height="55" rx="10"/>
+            <text class="lbl" x="160" y="533">Кузов</text>
+        </a>
+
+        <a th:href="@{/catalog/section/{c}(c='chassis',make=${carMake},model=${carModel},year=${carYear})}">
+            <rect class="wheel" x="40" y="100" width="34" height="80" rx="8"/>
+            <rect class="wheel" x="246" y="100" width="34" height="80" rx="8"/>
+            <rect class="wheel" x="40" y="400" width="34" height="80" rx="8"/>
+            <rect class="wheel" x="246" y="400" width="34" height="80" rx="8"/>
+            <text class="lbl" x="57" y="92">Ходовая</text>
+            <text class="lbl" x="263" y="92">Ходовая</text>
+        </a>
+    </svg>
+
+    <h2>Все разделы списком</h2>
+    <div class="tiles">
+        <a th:each="s : ${sections}"
+           th:href="@{/catalog/section/{c}(c=${s.code()},make=${carMake},model=${carModel},year=${carYear})}"
+           th:text="${s.title()}"></a>
+    </div>
+</main>
+</body>
+</html>

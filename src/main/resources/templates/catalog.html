@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Каталог запчастей</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<header th:replace="~{fragments :: header(${email})}"></header>
+<main class="narrow">
+    <h1>Каталог запчастей</h1>
+
+    <h2>Поиск по VIN</h2>
+    <p class="error" th:if="${error}" th:text="${error}"></p>
+    <form th:action="@{/catalog/vin}" method="get">
+        <label>VIN-код автомобиля (17 символов)</label>
+        <input type="text" name="vin" th:value="${vin}" maxlength="17" required>
+        <button type="submit">Найти автомобиль</button>
+    </form>
+
+    <h2>Или выберите автомобиль вручную</h2>
+    <form th:action="@{/catalog/car}" method="get">
+        <label>Марка</label>
+        <input type="text" name="make" list="makes" required>
+        <datalist id="makes">
+            <option value="Lada"></option><option value="Toyota"></option>
+            <option value="Volkswagen"></option><option value="Hyundai"></option>
+            <option value="Kia"></option><option value="Skoda"></option>
+            <option value="Renault"></option><option value="Nissan"></option>
+            <option value="Ford"></option><option value="BMW"></option>
+            <option value="Mercedes-Benz"></option><option value="Audi"></option>
+            <option value="Mazda"></option><option value="Mitsubishi"></option>
+            <option value="Chevrolet"></option><option value="Opel"></option>
+            <option value="Honda"></option><option value="Peugeot"></option>
+            <option value="UAZ"></option><option value="GAZ"></option>
+        </datalist>
+        <label>Модель</label>
+        <input type="text" name="model" required>
+        <label>Год выпуска (необязательно)</label>
+        <input type="number" name="year" min="1950" max="2035">
+        <button type="submit">Открыть каталог</button>
+    </form>
+</main>
+</body>
+</html>

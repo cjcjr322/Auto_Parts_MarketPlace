@@ -16,3 +16,15 @@ a.button { display: inline-block; padding: 12px 24px; background: #1f3a5f; color
 .card { background: #fff; border: 1px solid #ccc; padding: 12px 18px; margin: 14px 0; }
 .card h3 { margin: 6px 0; }
 .badge { display: inline-block; background: #e3e9f1; padding: 4px 10px; font-size: 15px; }
+.car { display: block; margin: 16px auto; max-width: 320px; width: 100%; }
+.car .body { fill: #eef2f7; stroke: #1f3a5f; stroke-width: 3; }
+.car .zone { fill: #fff; stroke: #1f3a5f; stroke-width: 2; cursor: pointer; }
+.car a:hover .zone { fill: #cfdcf0; }
+.car .wheel { fill: #333; cursor: pointer; }
+.car a:hover .wheel { fill: #1f3a5f; }
+.car .lbl { font-size: 15px; font-weight: bold; fill: #1f3a5f; text-anchor: middle; font-family: Arial, sans-serif; pointer-events: none; }
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+.tiles a { display: block; background: #fff; border: 1px solid #999; padding: 16px; text-decoration: none; color: #1f3a5f; font-weight: bold; }
+.tiles a:hover { background: #e3e9f1; }
+a.button + a.button { margin-left: 8px; }
+h2 { margin-top: 28px; }
