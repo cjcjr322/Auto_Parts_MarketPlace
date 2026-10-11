@@ -1,5 +1,6 @@
 package com.Auto_Parts_MarketPlace.Auto_Parts_MarketPlace.listing;
 
+import com.Auto_Parts_MarketPlace.Auto_Parts_MarketPlace.notify.NotificationService;
 import com.Auto_Parts_MarketPlace.Auto_Parts_MarketPlace.user.User;
 import com.Auto_Parts_MarketPlace.Auto_Parts_MarketPlace.user.UserRepository;
 import org.springframework.http.HttpStatus;
@@ -14,10 +15,13 @@ public class ListingService {
 
     private final ListingRepository listings;
     private final UserRepository users;
+    private final NotificationService notifications;
 
-    public ListingService(ListingRepository listings, UserRepository users) {
+    public ListingService(ListingRepository listings, UserRepository users,
+                          NotificationService notifications) {
         this.listings = listings;
         this.users = users;
+        this.notifications = notifications;
     }
 
     private User userByEmail(String email) {
@@ -35,7 +39,16 @@ public class ListingService {
         l.setDescription(description == null ? null : description.trim());
         l.setPrice(price);
         l.setCity(city == null ? null : city.trim());
-        return listings.save(l);
+        Listing saved = listings.save(l);
+
+        if (type == ListingType.SELL) {
+            List<Listing> wants = listings.findMatches(
+                    ListingType.WANT, saved.getOwner(), saved.getPartNumber(), saved.getTitle());
+            for (Listing want : wants) {
+                notifications.notifyMatch(want, saved);
+            }
+        }
+        return saved;
     }
 
     public List<Listing> search(ListingType type, String q) {

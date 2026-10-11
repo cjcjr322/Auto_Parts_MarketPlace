@@ -20,4 +20,15 @@ public interface ListingRepository extends JpaRepository<Listing, Long> {
     List<Listing> search(@Param("type") ListingType type, @Param("q") String q);
 
     List<Listing> findByOwnerOrderByCreatedAtDesc(User owner);
+    @Query("""
+        select l from Listing l
+        where l.active = true and l.type = :type and l.owner <> :owner
+          and ((l.partNumber <> '' and lower(l.partNumber) = lower(:partNumber))
+            or lower(:title) like lower(concat('%', l.title, '%'))
+            or lower(l.title) like lower(concat('%', :title, '%')))
+        """)
+    List<Listing> findMatches(@Param("type") ListingType type,
+                              @Param("owner") User owner,
+                              @Param("partNumber") String partNumber,
+                              @Param("title") String title);
 }
