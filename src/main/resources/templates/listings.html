@@ -20,6 +20,14 @@
         <input type="text" name="q" th:value="${q}">
         <button type="submit">Найти</button>
     </form>
+    <div th:if="${!links.isEmpty()}">
+        <p>Искать «<span th:text="${q}"></span>» на других сайтах:</p>
+        <ul>
+            <li th:each="x : ${links}">
+                <a th:href="${x.url()}" th:text="${x.name()}" target="_blank" rel="noopener"></a>
+            </li>
+        </ul>
+    </div>
     <p th:if="${email != null}"><a class="button" th:href="@{/my/listings/new}">Добавить объявление</a></p>
     <p th:if="${items.isEmpty()}">Ничего не найдено.</p>
     <div class="card" th:each="l : ${items}">

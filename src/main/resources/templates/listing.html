@@ -18,6 +18,12 @@
     <p th:if="${l.city != null and l.city != ''}">Город: <span th:text="${l.city}"></span></p>
     <p th:if="${l.description != null}" th:text="${l.description}"></p>
     <p>Добавлено: <span th:text="${#temporals.format(l.createdAt, 'dd.MM.yyyy')}"></span></p>
+    <h3>Искать на других сайтах</h3>
+    <ul>
+        <li th:each="x : ${links}">
+            <a th:href="${x.url()}" th:text="${x.name()}" target="_blank" rel="noopener"></a>
+        </li>
+    </ul>
     <hr>
     <p th:if="${email != null}">Автор: <span th:text="${l.owner.name}"></span>,
         почта: <a th:href="'mailto:' + ${l.owner.email}" th:text="${l.owner.email}"></a></p>

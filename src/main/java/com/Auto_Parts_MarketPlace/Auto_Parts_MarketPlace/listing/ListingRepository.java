@@ -31,4 +31,5 @@ public interface ListingRepository extends JpaRepository<Listing, Long> {
                               @Param("owner") User owner,
                               @Param("partNumber") String partNumber,
                               @Param("title") String title);
+    List<Listing> findByTypeAndActiveTrue(ListingType type);
 }

@@ -1,5 +1,7 @@
 package com.Auto_Parts_MarketPlace.Auto_Parts_MarketPlace.web;
 
+import com.Auto_Parts_MarketPlace.Auto_Parts_MarketPlace.external.ExternalLinkService;
+import com.Auto_Parts_MarketPlace.Auto_Parts_MarketPlace.listing.Listing;
 import com.Auto_Parts_MarketPlace.Auto_Parts_MarketPlace.listing.ListingService;
 import com.Auto_Parts_MarketPlace.Auto_Parts_MarketPlace.listing.ListingType;
 import org.springframework.stereotype.Controller;
@@ -12,9 +14,11 @@ import java.security.Principal;
 public class ListingController {
 
     private final ListingService service;
+    private final ExternalLinkService externalLinks;
 
-    public ListingController(ListingService service) {
+    public ListingController(ListingService service, ExternalLinkService externalLinks) {
         this.service = service;
+        this.externalLinks = externalLinks;
     }
 
     private void addEmail(Principal principal, Model model) {
@@ -31,13 +35,16 @@ public class ListingController {
                 type == ListingType.SELL ? "Продаются запчасти" : "Ищут запчасти");
         model.addAttribute("q", q);
         model.addAttribute("items", service.search(type, q));
+        model.addAttribute("links", externalLinks.forQuery(q));
         return "listings";
     }
 
     @GetMapping("/listing/{id}")
     public String view(@PathVariable Long id, Principal principal, Model model) {
         addEmail(principal, model);
-        model.addAttribute("l", service.get(id));
+        Listing l = service.get(id);
+        model.addAttribute("l", l);
+        model.addAttribute("links", externalLinks.forListing(l));
         return "listing";
     }
 
