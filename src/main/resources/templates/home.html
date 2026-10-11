@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Автозапчасти</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<header th:replace="~{fragments :: header(${email})}"></header>
+<main>
+    <h1>Поиск автозапчастей</h1>
+    <p>Здесь будет поиск по VIN и объявления.</p>
+    <p><a class="button" th:href="@{/listings(type='SELL')}">Смотреть объявления «Продаю»</a></p>
+    <p><a class="button" th:href="@{/listings(type='WANT')}">Смотреть запросы «Ищу»</a></p>
+</main>
+</body>
+</html>

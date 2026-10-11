@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<body>
+<header th:fragment="header(email)">
+    <a class="logo" th:href="@{/}">Автозапчасти</a>
+    <nav>
+        <a th:href="@{/listings}">Объявления</a>
+        <span th:if="${email == null}">
+            <a th:href="@{/login}">Войти</a>
+            <a th:href="@{/register}">Регистрация</a>
+        </span>
+        <span th:if="${email != null}">
+            <a th:href="@{/my/listings}">Мои объявления</a>
+            <span th:text="${userName}"></span>
+            <form th:action="@{/logout}" method="post" class="inline">
+                <button type="submit" class="link">Выйти</button>
+            </form>
+        </span>
+    </nav>
+</header>
+</body>
+</html>

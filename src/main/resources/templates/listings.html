@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Объявления</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<header th:replace="~{fragments :: header(${email})}"></header>
+<main>
+    <h1 th:text="${pageTitle}"></h1>
+    <p>
+        <a th:href="@{/listings(type='SELL')}">Продаю</a> |
+        <a th:href="@{/listings(type='WANT')}">Ищу</a>
+    </p>
+    <form th:action="@{/listings}" method="get">
+        <input type="hidden" name="type" th:value="${currentType}">
+        <label>Поиск по названию, номеру детали или автомобилю</label>
+        <input type="text" name="q" th:value="${q}">
+        <button type="submit">Найти</button>
+    </form>
+    <p th:if="${email != null}"><a class="button" th:href="@{/my/listings/new}">Добавить объявление</a></p>
+    <p th:if="${items.isEmpty()}">Ничего не найдено.</p>
+    <div class="card" th:each="l : ${items}">
+        <h3><a th:href="@{/listing/{id}(id=${l.id})}" th:text="${l.title}"></a></h3>
+        <p th:text="${l.carInfo}"></p>
+        <p th:if="${l.partNumber != ''}">Номер: <span th:text="${l.partNumber}"></span></p>
+        <p th:if="${l.price != null}"><b th:text="${l.price} + ' ₽'"></b></p>
+    </div>
+</main>
+</body>
+</html>

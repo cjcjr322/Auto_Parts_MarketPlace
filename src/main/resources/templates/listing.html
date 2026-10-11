@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Объявление</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<header th:replace="~{fragments :: header(${email})}"></header>
+<main>
+    <p><a th:href="@{/listings(type=${l.type})}">← К списку</a></p>
+    <h1 th:text="${l.title}"></h1>
+    <p><span class="badge" th:text="${l.type.label}"></span></p>
+    <p th:if="${l.carInfo != ''}">Автомобиль: <b th:text="${l.carInfo}"></b></p>
+    <p th:if="${l.partNumber != ''}">Номер детали: <b th:text="${l.partNumber}"></b></p>
+    <p th:if="${l.price != null}">Цена: <b th:text="${l.price} + ' ₽'"></b></p>
+    <p th:if="${l.city != null and l.city != ''}">Город: <span th:text="${l.city}"></span></p>
+    <p th:if="${l.description != null}" th:text="${l.description}"></p>
+    <p>Добавлено: <span th:text="${#temporals.format(l.createdAt, 'dd.MM.yyyy')}"></span></p>
+    <hr>
+    <p th:if="${email != null}">Автор: <span th:text="${l.owner.name}"></span>,
+        почта: <a th:href="'mailto:' + ${l.owner.email}" th:text="${l.owner.email}"></a></p>
+    <p th:if="${email == null}"><a th:href="@{/login}">Войдите</a>, чтобы увидеть контакты автора.</p>
+</main>
+</body>
+</html>
